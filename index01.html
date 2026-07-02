@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AM 입문교육 사전안내</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --ink: #111;
+      --sub: #666;
+      --muted: #9aa2ad;
+      --accent: #79a8ff;
+      --glass: rgba(255,255,255,.48);
+      --glass-border: rgba(255,255,255,.68);
+      --shadow: 0 10px 40px rgba(0,0,0,.055);
+      --radius-xl: 38px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      letter-spacing: -0.045em;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+      opacity: .03;
+      z-index: -3;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -2;
+    }
+
+    .orb {
+      position: absolute;
+      width: 38vw;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(82px);
+      opacity: .34;
+      animation: floatOrb 14s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      left: -12vw;
+      top: -8vw;
+      background: radial-gradient(circle, rgba(205,228,255,.95), transparent 66%);
+    }
+
+    .orb.two {
+      right: -14vw;
+      top: 16vh;
+      background: radial-gradient(circle, rgba(255,255,255,.95), transparent 64%);
+      animation-delay: -4s;
+    }
+
+    .orb.three {
+      left: 30vw;
+      bottom: -18vw;
+      background: radial-gradient(circle, rgba(221,245,255,.82), transparent 68%);
+      animation-delay: -7s;
+    }
+
+    @keyframes floatOrb {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(36px,-28px,0) scale(1.06); }
+    }
+
+    .wrap {
+      width: min(1240px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .glass {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(36px);
+      -webkit-backdrop-filter: blur(36px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 0;
+      background: rgba(248,250,252,.48);
+      border-bottom: 1px solid rgba(255,255,255,.72);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .brand-title {
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .brand-title strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.075em;
+    }
+
+    .brand-title span {
+      display: block;
+      margin-top: 6px;
+      color: var(--sub);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .nav button {
+      padding: 10px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.36);
+      color: #3d434b;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .28s ease;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      color: var(--ink);
+      background: rgba(255,255,255,.78);
+      transform: translateY(-2px);
+    }
+
+    .page {
+      display: none;
+      min-height: calc(100vh - 80px);
+      animation: pageFade .45s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+        filter: blur(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 78px 0 92px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 54px;
+      align-items: end;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 24px;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 26px var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(76px, 12.5vw, 174px);
+      line-height: .86;
+      font-weight: 900;
+      letter-spacing: -0.118em;
+    }
+
+    .hero-note {
+      max-width: 520px;
+      padding: 34px;
+      border-radius: var(--radius-xl);
+    }
+
+    .hero-note .year {
+      display: block;
+      margin-bottom: 22px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .2em;
+    }
+
+    .hero-note h2 {
+      margin-bottom: 18px;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.09em;
+    }
+
+    .hero-note p {
+      color: var(--sub);
+      font-size: 17px;
+      line-height: 1.78;
+      word-break: keep-all;
+    }
+
+    .section-block {
+      padding: 96px 0;
+      border-top: 1px solid rgba(255,255,255,.78);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 48px;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .section-head h2,
+    .brand-page h2 {
+      font-size: clamp(42px, 6vw, 84px);
+      line-height: .96;
+      font-weight: 900;
+      letter-spacing: -0.105em;
+    }
+
+    .section-head p,
+    .brand-hero p {
+      max-width: 680px;
+      color: var(--sub);
+      font-size: 17px;
+      line-height: 1.86;
+      word-break: keep-all;
+    }
+
+    .common-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .common-card {
+      min-height: 430px;
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      text-align: left;
+      cursor: default;
+      transition: .32s ease;
+    }
+
+    .common-card.modal-trigger {
+      cursor: pointer;
+    }
+
+    .common-card:hover {
+      transform: translateY(-7px) scale(1.01);
+      background: rgba(255,255,255,.62);
+    }
+
+    .common-card span {
+      display: block;
+      margin-bottom: 40px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .common-card h3 {
+      margin-bottom: 20px;
+      font-size: 30px;
+      line-height: 1.04;
+      font-weight: 900;
+      letter-spacing: -0.09em;
+    }
+
+    .common-card p,
+    .common-card li {
+      color: var(--sub);
+      font-size: 15px;
+      line-height: 1.82;
+      word-break: keep-all;
+    }
+
+    .common-card ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .common-card strong {
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .open-hint {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .34s ease, visibility .34s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-back {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 12, 20, .68);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .modal-box {
+      position: relative;
+      width: min(1040px, 94vw);
+      max-height: 90vh;
+      padding: 42px;
+      border-radius: 44px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.88), rgba(255,255,255,.58)),
+        radial-gradient(circle at 18% 18%, rgba(121,168,255,.24), transparent 34%);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 40px 120px rgba(0,0,0,.24);
+      backdrop-filter: blur(46px);
+      -webkit-backdrop-filter: blur(46px);
+      overflow: hidden;
+      transform: translateY(34px) scale(.94);
+      transition: transform .34s ease;
+    }
+
+    .modal.active .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .modal-title span {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .modal-title h3 {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: .95;
+      font-weight: 900;
+      letter-spacing: -0.1em;
+    }
+
+    .close-modal {
+      flex: 0 0 auto;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,.82);
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 12px 34px rgba(0,0,0,.12);
+    }
+
+    .slider {
+      position: relative;
+    }
+
+    .slide-stage {
+      min-height: min(560px, calc(90vh - 230px));
+      display: grid;
+      place-items: center;
+      border-radius: 32px;
+      overflow: hidden;
+      background: rgba(255,255,255,.42);
+      border: 1px solid rgba(255,255,255,.72);
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      animation: slideFade .28s ease;
+    }
+
+    .slide.active {
+      display: grid;
+    }
+
+    .slide img {
+      width: 100%;
+      max-height: calc(90vh - 260px);
+      object-fit: contain;
+      border-radius: 22px;
+      display: block;
+    }
+
+    .slide-placeholder {
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.8;
+    }
+
+    @keyframes slideFade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .slide-btn {
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,.72);
+      color: var(--ink);
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 12px 34px rgba(0,0,0,.1);
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(17,17,17,.22);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      width: 24px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .brand-page {
+      --brand-accent: var(--accent);
+      padding: 112px 0;
+    }
+
+    .brand-page.hamburger { --brand-accent: #ff8a6b; }
+    .brand-page.coffee { --brand-accent: #9e806a; }
+    .brand-page.kkd { --brand-accent: #6edb9c; }
+    .brand-page.concession { --brand-accent: #74a8ff; }
+    .brand-page.newbiz { --brand-accent: #ffc36f; }
+
+    .brand-hero {
+      display: grid;
+      grid-template-columns: .88fr 1.12fr;
+      gap: 42px;
+      align-items: end;
+      margin-bottom: 44px;
+    }
+
+    .brand-hero .label { color: var(--brand-accent); }
+
+    .blank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .blank-panel {
+      min-height: 320px;
+      padding: 30px;
+      border-radius: var(--radius-xl);
+      transition: .3s ease;
+    }
+
+    .blank-panel:hover {
+      transform: translateY(-6px) scale(1.01);
+      background: rgba(255,255,255,.6);
+    }
+
+    .blank-panel span {
+      display: block;
+      margin-bottom: 58px;
+      color: var(--brand-accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .blank-panel h3 {
+      margin-bottom: 18px;
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 900;
+      letter-spacing: -0.085em;
+    }
+
+    .blank-panel p {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 76px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      filter: blur(10px);
+      transition: opacity .72s ease, transform .72s ease, filter .72s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .section-head,
+      .brand-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .common-grid,
+      .blank-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .wrap { width: min(100% - 28px, 1240px); }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav button {
+        padding: 10px 9px;
+        text-align: center;
+        font-size: 12px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 58px 0 78px;
+      }
+
+      h1 { font-size: clamp(62px, 19vw, 102px); }
+
+      .section-block,
+      .brand-page {
+        padding: 74px 0;
+      }
+
+      .common-grid,
+      .blank-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .common-card { min-height: 400px; }
+
+      .modal-box {
+        padding: 28px;
+        border-radius: 30px;
+      }
+
+      .slide-stage {
+        min-height: min(460px, calc(90vh - 220px));
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+  </div>
+
+  <header>
+    <div class="wrap topbar">
+      <button class="brand-title" type="button" data-page="common" style="border:0;background:transparent;text-align:left;font-family:inherit;">
+        <strong>AM 입문교육</strong>
+        <span>Pre-Guide 2026</span>
+      </button>
+
+      <nav class="nav">
+        <button class="active" type="button" data-page="common">Common</button>
+        <button type="button" data-page="hamburger">Hamburger</button>
+        <button type="button" data-page="coffee">Coffee</button>
+        <button type="button" data-page="kkd">KKD</button>
+        <button type="button" data-page="concession">Concession</button>
+        <button type="button" data-page="newbiz">New Business</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="common" class="page active">
+      <div class="hero wrap">
+        <div class="hero-grid">
+          <div class="hero-title reveal">
+            <span class="kicker">2026 AM Education</span>
+            <h1>AM<br>입문교육</h1>
+          </div>
+
+          <aside class="hero-note glass reveal">
+            <span class="year">PRE-GUIDE</span>
+            <h2>첫 출근 전,<br>꼭 확인할 것들.</h2>
+            <p>
+              AM 입사를 진심으로 축하드립니다.
+              교육 참석 전 필요한 일정, 위치, 출결, 기숙사 안내를 한 페이지에 정리했습니다.
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div>
+              <span class="label">Common Information</span>
+              <h2>공통 안내</h2>
+            </div>
+            <p>
+              첫 페이지는 4개의 핵심 박스로 구성했습니다.
+              위치, 고용24, 기숙사 안내는 클릭하면 큰 이미지 슬라이더로 확인할 수 있습니다.
+            </p>
+          </div>
+
+          <div class="common-grid reveal">
+            <article class="common-card glass">
+              <span>01 Schedule</span>
+              <h3>일정</h3>
+              <p>
+                2026년 7월 6일(월)<br>
+                ~ 2026년 7월 31일(금)
+              </p>
+            </article>
+
+            <article class="common-card glass modal-trigger" data-modal="location">
+              <span>02 Location</span>
+              <h3>위치</h3>
+              <ul>
+                <li><strong>LOTTE GRS ACADEMY</strong></li>
+                <li>서울시 금천구 벚꽃로 104 금천롯데타워 6층</li>
+                <li>1호선 독산역 1번 출구 도보 약 10분</li>
+                <li>네이버지도·카카오맵에서 ‘롯데지알에스 아카데미’ 검색</li>
+                <li><strong>교육생 자차 이용 불가</strong></li>
+              </ul>
+              <div class="open-hint">Click to view map →</div>
+            </article>
+
+            <article class="common-card glass modal-trigger" data-modal="employment">
+              <span>03 Employment 24</span>
+              <h3>고용24<br>출결</h3>
+              <ul>
+                <li>교육 참석 전 <strong>고용24 회원가입</strong></li>
+                <li><strong>고용24 출결관리 앱</strong> 설치</li>
+                <li>앱 설치 후 <strong>본인인증</strong> 완료</li>
+                <li><strong>출결기기등록</strong>까지 사전 완료</li>
+              </ul>
+              <div class="open-hint">Click to view detail →</div>
+            </article>
+
+            <article class="common-card glass modal-trigger" data-modal="dormitory">
+              <span>04 Dormitory</span>
+              <h3>기숙사<br>잇소키 안내</h3>
+              <ul>
+                <li>기숙사는 <strong>사전 신청자에 한하여 이용</strong></li>
+                <li>잇소키 카카오톡 알림톡 확인 필수</li>
+                <li>사전 입실 가능 시간: <strong>오후 5시 ~ 오후 10시</strong></li>
+                <li>세면도구, 수건 등 <strong>개인용품 지참</strong></li>
+                <li>알림톡 및 출입 안내 내용 삭제 금지</li>
+              </ul>
+              <div class="open-hint">Click to view detail →</div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hamburger" class="page brand-page hamburger">
+      <div class="wrap">
+        <div class="brand-hero reveal">
+          <div>
+            <span class="label">Hamburger Division</span>
+            <h2>햄버거 부문</h2>
+          </div>
+          <p>세부 일정, 복장 규정, 교육 대상자 명단은 추후 입력 영역으로 비워두었습니다.</p>
+        </div>
+        <div class="blank-grid reveal">
+          <article class="blank-panel glass"><span>01 Schedule</span><h3>세부 일정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>02 Dress Code</span><h3>복장 규정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>03 List</span><h3>교육 대상자 명단</h3><p>Blank</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="coffee" class="page brand-page coffee">
+      <div class="wrap">
+        <div class="brand-hero reveal">
+          <div>
+            <span class="label">Coffee Division</span>
+            <h2>커피 부문</h2>
+          </div>
+          <p>세부 일정, 복장 규정, 교육 대상자 명단은 추후 입력 영역으로 비워두었습니다.</p>
+        </div>
+        <div class="blank-grid reveal">
+          <article class="blank-panel glass"><span>01 Schedule</span><h3>세부 일정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>02 Dress Code</span><h3>복장 규정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>03 List</span><h3>교육 대상자 명단</h3><p>Blank</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="kkd" class="page brand-page kkd">
+      <div class="wrap">
+        <div class="brand-hero reveal">
+          <div>
+            <span class="label">KKD Division</span>
+            <h2>KKD 부문</h2>
+          </div>
+          <p>세부 일정, 복장 규정, 교육 대상자 명단은 추후 입력 영역으로 비워두었습니다.</p>
+        </div>
+        <div class="blank-grid reveal">
+          <article class="blank-panel glass"><span>01 Schedule</span><h3>세부 일정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>02 Dress Code</span><h3>복장 규정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>03 List</span><h3>교육 대상자 명단</h3><p>Blank</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="concession" class="page brand-page concession">
+      <div class="wrap">
+        <div class="brand-hero reveal">
+          <div>
+            <span class="label">Concession Division</span>
+            <h2>컨세션 부문</h2>
+          </div>
+          <p>세부 일정, 복장 규정, 교육 대상자 명단은 추후 입력 영역으로 비워두었습니다.</p>
+        </div>
+        <div class="blank-grid reveal">
+          <article class="blank-panel glass"><span>01 Schedule</span><h3>세부 일정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>02 Dress Code</span><h3>복장 규정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>03 List</span><h3>교육 대상자 명단</h3><p>Blank</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="newbiz" class="page brand-page newbiz">
+      <div class="wrap">
+        <div class="brand-hero reveal">
+          <div>
+            <span class="label">New Business Division</span>
+            <h2>신사업 부문</h2>
+          </div>
+          <p>세부 일정, 복장 규정, 교육 대상자 명단은 추후 입력 영역으로 비워두었습니다.</p>
+        </div>
+        <div class="blank-grid reveal">
+          <article class="blank-panel glass"><span>01 Schedule</span><h3>세부 일정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>02 Dress Code</span><h3>복장 규정</h3><p>Blank</p></article>
+          <article class="blank-panel glass"><span>03 List</span><h3>교육 대상자 명단</h3><p>Blank</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="location">
+    <div class="modal-back" data-close></div>
+    <div class="modal-box">
+      <div class="modal-top">
+        <div class="modal-title">
+          <span>Location Guide</span>
+          <h3>오시는 길</h3>
+        </div>
+        <button class="close-modal" data-close>×</button>
+      </div>
+
+      <div class="slider">
+        <div class="slide-stage">
+          <div class="slide active">
+            <div class="slide-placeholder">
+              오시는 길 PNG 이미지 영역<br>
+              실제 사용 시 아래처럼 교체<br><br>
+              &lt;img src="map.png" alt="오시는 길"&gt;
+            </div>
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slide-btn prev">←</button>
+          <div class="dots"></div>
+          <button class="slide-btn next">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="employment">
+    <div class="modal-back" data-close></div>
+    <div class="modal-box">
+      <div class="modal-top">
+        <div class="modal-title">
+          <span>Employment 24</span>
+          <h3>고용24 세부 안내</h3>
+        </div>
+        <button class="close-modal" data-close>×</button>
+      </div>
+
+      <div class="slider">
+        <div class="slide-stage">
+          <div class="slide active">
+            <div class="slide-placeholder">
+              고용24 안내 이미지 1<br>
+              예시: &lt;img src="employment24-01.png" alt="고용24 안내 1"&gt;
+            </div>
+          </div>
+          <div class="slide">
+            <div class="slide-placeholder">
+              고용24 안내 이미지 2<br>
+              예시: &lt;img src="employment24-02.png" alt="고용24 안내 2"&gt;
+            </div>
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slide-btn prev">←</button>
+          <div class="dots"></div>
+          <button class="slide-btn next">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="dormitory">
+    <div class="modal-back" data-close></div>
+    <div class="modal-box">
+      <div class="modal-top">
+        <div class="modal-title">
+          <span>Dormitory Guide</span>
+          <h3>기숙사 잇소키 안내</h3>
+        </div>
+        <button class="close-modal" data-close>×</button>
+      </div>
+
+      <div class="slider">
+        <div class="slide-stage">
+          <div class="slide active">
+            <div class="slide-placeholder">
+              기숙사 안내 이미지 1<br>
+              예시: &lt;img src="dormitory-01.png" alt="기숙사 안내 1"&gt;
+            </div>
+          </div>
+          <div class="slide">
+            <div class="slide-placeholder">
+              기숙사 안내 이미지 2<br>
+              예시: &lt;img src="dormitory-02.png" alt="기숙사 안내 2"&gt;
+            </div>
+          </div>
+        </div>
+        <div class="slider-controls">
+          <button class="slide-btn prev">←</button>
+          <div class="dots"></div>
+          <button class="slide-btn next">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>AM 입문교육 사전안내 · 2026</footer>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+
+    function refreshReveal() {
+      revealItems.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) {
+          item.classList.add('visible');
+        }
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
+
+    revealItems.forEach((item) => observer.observe(item));
+    refreshReveal();
+
+    const pageButtons = document.querySelectorAll('[data-page]');
+    const pages = document.querySelectorAll('.page');
+
+    function openPage(pageId) {
+      pages.forEach((page) => {
+        page.classList.toggle('active', page.id === pageId);
+      });
+
+      document.querySelectorAll('.nav button').forEach((button) => {
+        button.classList.toggle('active', button.dataset.page === pageId);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      setTimeout(refreshReveal, 80);
+    }
+
+    pageButtons.forEach((button) => {
+      button.addEventListener('click', () => openPage(button.dataset.page));
+    });
+
+    const modals = document.querySelectorAll('.modal');
+
+    document.querySelectorAll('.modal-trigger').forEach((card) => {
+      card.addEventListener('click', () => {
+        const modal = document.getElementById(card.dataset.modal);
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+      });
+    });
+
+    function closeModals() {
+      modals.forEach((modal) => modal.classList.remove('active'));
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('[data-close]').forEach((el) => {
+      el.addEventListener('click', closeModals);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModals();
+    });
+
+    document.querySelectorAll('.slider').forEach((slider) => {
+      const slides = slider.querySelectorAll('.slide');
+      const prev = slider.querySelector('.prev');
+      const next = slider.querySelector('.next');
+      const dotsWrap = slider.querySelector('.dots');
+      let index = 0;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => showSlide(i));
+        dotsWrap.appendChild(dot);
+      });
+
+      const dots = dotsWrap.querySelectorAll('.dot');
+
+      function showSlide(nextIndex) {
+        index = (nextIndex + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      }
+
+      prev.addEventListener('click', () => showSlide(index - 1));
+      next.addEventListener('click', () => showSlide(index + 1));
+
+      if (slides.length <= 1) {
+        prev.style.visibility = 'hidden';
+        next.style.visibility = 'hidden';
+      }
+    });
+  </script>
+</body>
+</html>
